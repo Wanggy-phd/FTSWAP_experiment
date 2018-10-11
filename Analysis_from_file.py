@@ -68,10 +68,9 @@ chi_unfiltered_perror = an.get_chi_error(chi, B_chi, results_loaded['Unitary'])
 print('Tp:', an.check_TP(chi_filtered, B_chi, n))
 
 #%% Calculated traces and fidelities
-process_fidelity = chi_perror[0, 0]/(2**n)
-process_fidelity_unfiltered = chi_unfiltered_perror[0, 0]/(2**n)
-channel_fidelity = (2**n)*tomoself.get_max_ent_2n(n).T @ choi_filtered @ tomoself.get_max_ent_2n(n)
-
+process_fidelity = an.process_fidelity(chi_perror, n)
+process_fidelity_unfiltered = an.process_fidelity(chi_unfiltered_perror, n)
+channel_fidelity = an.channel_fidelity(chi_perror, B_choi, n)
 print('Trace of filtered Chi:', np.trace(chi_filtered))
 print('Trace of filtered Choi:', np.trace(choi_filtered))
 print('Trace of error Chi :', np.trace(chi_perror))

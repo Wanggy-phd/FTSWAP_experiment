@@ -121,7 +121,7 @@ qc2.cx(q2[2], q2[1])
 qc2.cx(q2[1], q2[2])
 
 # CX from qubit 2 to qubit 1
-qc2.cx(q2[1], q2[2])
+qc2.cx(q2[2], q2[1])
 ################################################################################
 # Set number of shots and backend
 shots = 20

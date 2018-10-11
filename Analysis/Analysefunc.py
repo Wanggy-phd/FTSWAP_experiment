@@ -161,3 +161,11 @@ def get_measfiltermat(chi_meas, B_chi, nq):
 def filter_meas(chi, chi_meas, n):
     k = n
     return k
+
+def process_fidelity(chi_error, n):
+    return chi_error[0,0]/(2**n);
+
+def channel_fidelity(chi_error,B_choi, n):
+    choi_error = tomoself.chi_to_choi(chi_error, B_choi, n)
+    maxent = tomoself.get_max_ent_2n(n)
+    return maxent.H @ choi_error @ maxent

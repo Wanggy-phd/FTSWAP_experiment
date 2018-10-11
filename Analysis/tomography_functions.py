@@ -106,7 +106,7 @@ def chi_to_choi(chi, B_choi, n):
     choi = np.zeros(np.shape(chi), dtype='complex')
     for combi in itt.product(range(4**n), repeat=2):
         choi += chi[combi] * B_choi[combi[0]] @ B_choi[combi[1]].H
-    return choi / np.trace(chi) # ensure choi matrix is trace-1
+    return choi / np.trace(choi) # ensure choi matrix is trace-1
 
 #%%
 
