@@ -19,15 +19,18 @@ Q_program = QuantumProgram()
 q = Q_program.create_quantum_register("qr", 3)
 c = Q_program.create_classical_register("cr", 3)
 
-qc = Q_program.create_circuit("Hadamard",[q],[c])
+qc = Q_program.create_circuit("NFTSWAP",[q],[c])
 
 
 ###############################################################################
+#Specify NFT SWAP circuit
 
-qc.h(q[0])
 
+
+# CX from qubit 2 to qubit 0
+qc.cx(q[2], q[0]) 
 
 
 ###############################################################################
 # Define perfect Unitary
-Unitary = np.sqrt(1/2)*np.array([[1, 1],[1, -1]])
+Unitary = np.array([[1, 0, 0, 0],[0, 1, 0, 0],[0, 0, 0, 1],[0, 0, 1, 0]])

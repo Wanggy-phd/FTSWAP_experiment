@@ -3,10 +3,7 @@
 Created on Fri Aug  3 15:01:21 2018
 
 @author: Jarnd
-"""
-print('\033[H\033[J')
 
-"""
 This code was inspired/based on the qiskit tutorials provided by IBM, available
 at the qiskit-tutorials github. The Q_Exp_register file especially is based on 
 the 'process_tomography.py' file.
@@ -35,33 +32,48 @@ The jobdata is saved together with other info:
     - The total number of batches
 """
 
-# importing the needed Qiskit functions
-from qiskit import register, execute, get_backend, unregister 
-# Import other needed functions
+# importing the QISKit
+from qiskit import register, execute, get_backend, unregister
+
+
+# useful additional packages
 import Functions.Data_storage as store
 import Functions.Create_tomo_circuits as tomo
-# Import Quantum program of desired circuit
-from Circuits.circuit_FTSWAP import Q_program, q, c, Unitary                    # Change the import file for different circuit
-circuit_name = Q_program.get_circuit_names()[0]
 
-###############################################################################
-# Register at IBM Quantum Experience using token
-from IBM_Q_Experience.Q_Exp_register import qx_config
-provider = register(qx_config['APItoken'])
 ###############################################################################
 # Simulation or real experimemt? 's' for simulation, 'r' for real
 run_type = 'r'
-notes = ''                                                                      # Optional notes to be stored in the datafile
-maximum_credits = 15                                                            # Maximum number of credits PER BATCH
-nr_batches = 4                                                                  # Tries that nr of batches, if total number of circuits is not divisible adds one extra batch with the leftovers
+reg = True  # Set to true to register at IBM
+
+notes = ''  # Optional notes to be stored in the datafile
+maximum_credits = 8  # Maximum number of credits
+
+
+nr_batches = 4  # Tries that nr of batches, if total number of circuits is not divisible adds one extra batch with the leftovers
+
+
+###############################################################################
+# Register at IBM Quantum Experience using token
+if reg == True:
+
+    from IBM_Q_Experience.Q_Exp_register import qx_config
+    provider = register(qx_config['APItoken'])
+
+# Import Quantum program of desired circuit
+from Circuits.circuit_NFTSWAP3 import Q_program, q, c, Unitary
+circuit_name = Q_program.get_circuit_names()[0]
 
 ###############################################################################
 # Set number of shots, timeout, measurement- and preperation basis and backend
-shots = 8192                                                                    # shots for every circuit (max is 8192)
+shots = 8192  # shots for every circuit
+# timeout = 500000 # timeout in seconds before execution halts. This is the per-batch timeout, so total runtime <500*(nr_batches+1) seconds
+
 # The backend to use in the simulations. Check available_backends() for all backends
 backendsim = 'ibmq_qasm_simulator'
-# The backed to use for the actual experiments (e.g. the chip)
+
+# The backend to use for the actual experiments (e.g. the chip)
 backendreal = 'ibmqx4'
+
 # Measurement and preparation basis for process tomography
 meas_basis, prep_basis = 'Pauli', 'Pauli'
 
@@ -74,36 +86,43 @@ else:
     print('Error, wrong runtype!')
 
 ibmqxbackend = get_backend(backendreal)
+jobs = []
 job_data = []
 ################################################################################
 # Create tomo set and tomo circuits; put them in the quantum program
 [Q_program, tomo_set, tomo_circuits] = tomo.create_tomo_circuits(
     Q_program, circuit_name, q, c, [1, 0], meas_basis, prep_basis)
 
-
+#%%
 # Execute all the tomo circuits
 batch_size = int(len(tomo_circuits)/nr_batches)
 if len(tomo_circuits) % nr_batches != 0:
-    nr_batches += 1                                                             # Add an extra batch if the number of tomo circuits is not divisible by the batch number
+    nr_batches += 1
 
 for i in range(nr_batches):
-    run_circuits = tomo_circuits[i*batch_size:(i+1)*batch_size]                 # The names of the circuits to be ran in this batch
+    run_circuits = tomo_circuits[i*batch_size:(i+1)*batch_size]
     circuit_list = []
     for cir in run_circuits:
         Q_program.get_circuit(cir).name = cir
-        circuit_list.append(Q_program.get_circuit(cir))                         # Put the actual circuits in the ordered list            
-    print('Batch %d/%d: %s' % (i+1, nr_batches, 'INITIALIZING'))                # The circuits are now ready to be executed
-    
-    job = execute(circuit_list, backend=backendname, shots=shots, skip_transpiler=True)               # Execute the circuits of this batch (those in circuit_list)
-    job_data.append({'Date': job.creation_date,                                 # Put a dictionary of info of the current job in job_data
-                     'Jobid': job.id, 'runtype': run_type, 'batchno': i})
-    print('Batch %d/%d: %s' % (i+1, nr_batches, 'SENT'))                        # This batch is done and the jobs are saved to job_data and jobs
-    
+        circuit_list.append(Q_program.get_circuit(cir))
+    print('Batch %d/%d: %s' % (i+1, nr_batches, 'INITIALIZING'))
+    if i == 0:
+        job = execute(circuit_list, backend=backendname, shots=shots, skip_transpiler=True)
+        jobs.append(job)
+        job_data.append({'Date': job.creation_date,
+                         'Jobid': job.id, 'runtype': run_type, 'batchno': i})
+        print('Batch %d/%d: %s' % (i+1, nr_batches, 'SENT'))
+    else:
+        job = execute(circuit_list, backend=backendname, shots=shots, skip_transpiler=True)
+        jobs.append(job)
+        job_data.append({'Date': job.creation_date,
+                         'Jobid': job.id, 'runtype': run_type, 'batchno': i})
+        print('Batch %d/%d: %s' % (i+1, nr_batches, 'SENT'))
 
 ###############################################################################
-store.save_jobdata(circuit_name, job_data, tomo_set,                            # Save the data of all jobs (in job_data) to file
+store.save_jobdata(circuit_name, job_data, tomo_set,
                    backendname, shots, nr_batches, run_type, Unitary)
-store.save_last(circuit_name, job_data, tomo_set, backendname,                  # Save also to 'last' file
+store.save_last(circuit_name, job_data, tomo_set, backendname,
                 shots, nr_batches, run_type, Unitary)
 
-unregister(provider)                                                            # Unregister to prevent conflict with other files that register again
+unregister(provider)

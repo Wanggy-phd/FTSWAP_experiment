@@ -3,13 +3,33 @@
 Created on Fri Aug  3 15:01:21 2018
 
 @author: Jarnd
-"""
 
-
-"""
 This code was inspired/based on the qiskit tutorials provided by IBM, available
 at the qiskit-tutorials github. The Q_Exp_register file especially is based on 
 the 'process_tomography.py' file.
+
+This code runs tomography experiments on the IBM Q experience.
+The circuit for which the tomography is to be run is loaded from circuits.circuit_name, specified at the top of the file.
+If the run type is set to 'r' (for real) a real backend is used; if it is set to 's' (for simulation) a simulated backend is used.
+
+There are first made tomography circuits from the loaded circuit. The Pauli basis is used for both preparation and measurement.
+These are 18^n different circuits; for more than 1 qubit this is too much to run in one experiment on the IBM Q experience.
+All the tomography circuits are divided into n (+ 1 for remainder) batches, n = nr_batches.
+Each batch is then sent to the server.
+The jobdata is then saved to file specified by the circuit name, the experiment date and the run type.
+The jobdata is a list of nr_batches long with as entries a dictionary containing:
+    - The jobid to identify the job with the IBM Q servers
+    - The experiement date of the specific job
+    - The batchnr and the run type
+The jobdata is saved together with other info:
+    - The circuit name
+    - The tomography set
+    - The run type
+    - The overall experiment date
+    - The used backend in the experiment
+    - The number of shots per circuit
+    - The unitary matrix of the circuit
+    - The total number of batches
 """
 
 # importing the QISKit

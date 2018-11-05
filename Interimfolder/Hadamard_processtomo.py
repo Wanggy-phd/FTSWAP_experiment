@@ -3,13 +3,33 @@
 Created on Fri Aug  3 15:01:21 2018
 
 @author: Jarnd
-"""
 
-
-"""
 This code was inspired/based on the qiskit tutorials provided by IBM, available
 at the qiskit-tutorials github. The Q_Exp_register file especially is based on 
 the 'process_tomography.py' file.
+
+This code runs tomography experiments on the IBM Q experience.
+The circuit for which the tomography is to be run is loaded from circuits.circuit_name, specified at the top of the file.
+If the run type is set to 'r' (for real) a real backend is used; if it is set to 's' (for simulation) a simulated backend is used.
+
+There are first made tomography circuits from the loaded circuit. The Pauli basis is used for both preparation and measurement.
+These are 18^n different circuits; for more than 1 qubit this is too much to run in one experiment on the IBM Q experience.
+All the tomography circuits are divided into n (+ 1 for remainder) batches, n = nr_batches.
+Each batch is then sent to the server.
+The jobdata is then saved to file specified by the circuit name, the experiment date and the run type.
+The jobdata is a list of nr_batches long with as entries a dictionary containing:
+    - The jobid to identify the job with the IBM Q servers
+    - The experiement date of the specific job
+    - The batchnr and the run type
+The jobdata is saved together with other info:
+    - The circuit name
+    - The tomography set
+    - The run type
+    - The overall experiment date
+    - The used backend in the experiment
+    - The number of shots per circuit
+    - The unitary matrix of the circuit
+    - The total number of batches
 """
 
 # importing the QISKit
@@ -29,7 +49,7 @@ notes = ''  # Optional notes to be stored in the datafile
 maximum_credits = 8  # Maximum number of credits
 
 
-nr_batches = 4  # Tries that nr of batches, if total number of circuits is not divisible adds one extra batch with the leftovers
+nr_batches = 1  # Tries that nr of batches, if total number of circuits is not divisible adds one extra batch with the leftovers
 
 
 ###############################################################################
@@ -40,17 +60,20 @@ if reg == True:
     provider = register(qx_config['APItoken'])
 
 # Import Quantum program of desired circuit
-from Circuits.circuit_Id import Q_program, q, c, Unitary
+from Circuits.circuit_Hadamard import Q_program, q, c, Unitary
 circuit_name = Q_program.get_circuit_names()[0]
 
 ###############################################################################
 # Set number of shots, timeout, measurement- and preperation basis and backend
 shots = 8000  # shots for every circuit
 # timeout = 500000 # timeout in seconds before execution halts. This is the per-batch timeout, so total runtime <500*(nr_batches+1) seconds
+
 # The backend to use in the simulations. Check available_backends() for all backends
 backendsim = 'ibmq_qasm_simulator'
-# The backed to use for the actual experiments (e.g. the chip)
+
+# The backend to use for the actual experiments (e.g. the chip)
 backendreal = 'ibmqx4'
+
 # Measurement and preparation basis for process tomography
 meas_basis, prep_basis = 'Pauli', 'Pauli'
 
@@ -68,7 +91,7 @@ job_data = []
 ################################################################################
 # Create tomo set and tomo circuits; put them in the quantum program
 [Q_program, tomo_set, tomo_circuits] = tomo.create_tomo_circuits(
-    Q_program, circuit_name, q, c, [1, 0], meas_basis, prep_basis)
+    Q_program, circuit_name, q, c, [0], meas_basis, prep_basis)
 
 
 # Execute all the tomo circuits
