@@ -1,17 +1,7 @@
 
-*.pickle
+
 *.txt
-*.pickle
+
 *.pyc
 *.pyc
 *.pyc
-Analysis/__pycache__/__init__.cpython-36.pyc
-Analysis_from_file.py
-Circuits/__pycache__/__init__.cpython-36.pyc
-Circuits/__pycache__/circuit_FTSWAP.cpython-36.pyc
-Experiment_data/last--jobdata.pickle
-Functions/__pycache__/Create_tomo_circuits.cpython-36.pyc
-Functions/__pycache__/Data_storage.cpython-36.pyc
-Functions/__pycache__/results_gathering.cpython-36.pyc
-Get_results.py
-IBM_Q_Experience/__pycache__/__init__.cpython-36.pyc
