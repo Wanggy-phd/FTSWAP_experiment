@@ -32,5 +32,5 @@ The intended workflow:
 There are some other files that have a more or less standalone function:
 - The files in the directory /Errormodeling/ can be ran to obtain sumlation data and plots on the circuits in FTSWAP and NFTSWAP with a simple dephasing error model.
 
-- The comparison analysis can be used to compare the FTSWAP and NFTSWAP experiments outcomes and calculates the multi-tosingle qubit error rates for both implementations.
+- The comparison analysis can be used to compare the FTSWAP and NFTSWAP experiments outcomes and calculates the multi-to single qubit error rates for both implementations.
 
