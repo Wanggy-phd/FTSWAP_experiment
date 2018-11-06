@@ -1,0 +1,25 @@
+Job id's for experiment ran on 2018-10-01T10:30:03.820160+00:00
+Data saved on 10_01-12_30_56
+Experiment type is real
+Number of batches is 4
+
+Job nr 1/4: 
+Date: 2018-10-01T10:30:03.820160+00:00
+Job id:
+5bb1f72e8a89670046b0e4d7
+
+Job nr 2/4: 
+Date: 2018-10-01T10:30:15.813699+00:00
+Job id:
+5bb1f73fcb2b78003912b6fd
+
+Job nr 3/4: 
+Date: 2018-10-01T10:30:38.139371+00:00
+Job id:
+5bb1f751b398f7003b6e81c8
+
+Job nr 4/4: 
+Date: 2018-10-01T10:30:51.039037+00:00
+Job id:
+5bb1f75e8a89670046b0e529
+

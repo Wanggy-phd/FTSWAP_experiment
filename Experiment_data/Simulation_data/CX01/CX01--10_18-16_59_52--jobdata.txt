@@ -1,0 +1,25 @@
+Job id's for experiment ran on 2018-10-18T14:59:33.116777+00:00
+Data saved on 10_18-16_59_52
+Experiment type is simulation
+Number of batches is 4
+
+Job nr 1/4: 
+Date: 2018-10-18T14:59:33.116777+00:00
+Job id:
+5bc89fd6860686005e023588
+
+Job nr 2/4: 
+Date: 2018-10-18T14:59:37.414195+00:00
+Job id:
+5bc89fda15de9d005f57d682
+
+Job nr 3/4: 
+Date: 2018-10-18T14:59:40.956921+00:00
+Job id:
+5bc89fde746950005e9ac2b7
+
+Job nr 4/4: 
+Date: 2018-10-18T14:59:44.708553+00:00
+Job id:
+5bc89fe2c224fb00558edfb5
+

@@ -1,0 +1,7 @@
+Job id's for experiment ran on 2018-09-26T12:27:58.298940+00:00
+Data saved on 09_26-14_29_50
+Experiment type is simulation
+Number of batches is 4
+
+Job nr 1/4: 
+Date: 2018-09-26T12:27:58.298940+00:00
