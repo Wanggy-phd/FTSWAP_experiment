@@ -50,7 +50,7 @@ from IBM_Q_Experience.Q_Exp_register import qx_config
 provider = register(qx_config['APItoken'])
 ###############################################################################
 # Simulation or real experimemt? 's' for simulation, 'r' for real
-run_type = 'r'
+run_type = 's'
 notes = ''                                                                      # Optional notes to be stored in the datafile
 maximum_credits = 15                                                            # Maximum number of credits PER BATCH
 nr_batches = 4                                                                  # Tries that nr of batches, if total number of circuits is not divisible adds one extra batch with the leftovers

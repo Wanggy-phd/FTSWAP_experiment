@@ -320,6 +320,22 @@ def save_chi(chi_dict, timestamp, run_type, circuit_name):
     pickle.dump(chi_dict, fo)
     fo.close
 
+def save_chi_mult(chi_dict, timestamp, run_type, circuit_name):
+    '''
+    Saves a dictionary of process matrices of multiple tomography experiments together under 
+    'Experiment_data/Real_data/circuit_name/Multiplecircuit_name--MM_DD--HH_MM_SS-chimat.pickle'
+    And /Simulation_data/ if the specified runtype is 's'
+    '''
+    if run_type == 's':
+        directory = 'Experiment_data/Simulation_data/'
+    elif run_type == 'r':
+        directory = 'Experiment_data/Real_data/'
+    filepath = directory+circuit_name+'/Multiple'+circuit_name + \
+        '--'+timestamp.strftime("%m_%d-%H_%M_%S")+"--chimat.pickle"
+    fo = open(filepath, 'wb')
+    pickle.dump(chi_dict, fo)
+    fo.close
+
 def save_chi_last(chi_dict, circuit_name):
     '''
     Saves a dictionary of process matrices of any tomography experiment under 
@@ -331,12 +347,34 @@ def save_chi_last(chi_dict, circuit_name):
     pickle.dump(chi_dict, fo)
     fo.close
 
+def save_chi_last_mult(chi_dict, circuit_name):
+    '''
+    Saves a dictionary of process matrices of multiple tomography experiments together under 
+    'Experiment_data/chi--circuit_name--.pickle'
+    For quick reference use
+    '''
+    filepath = 'Experiment_data/Multiple'+'chi--'+circuit_name+'--.pickle'
+    fo = open(filepath, 'wb')
+    pickle.dump(chi_dict, fo)
+    fo.close
+
 def load_chi_last(circuit_name):
     '''
     Load the dictionary of process matrices from 'Experiment_data/chi--circuit_name--.pickle'
     as saved by save_chi_last()
     '''
     filepath = 'Experiment_data/'+'chi--'+circuit_name+'--.pickle'
+    fo = open(filepath, 'rb')
+    chi_dict = pickle.load(fo)
+    fo.close
+    return chi_dict
+
+def load_chi_last_mult(circuit_name):
+    '''
+    Load the dictionary of process matrices from 'Experiment_data/Multiplechi--circuit_name--.pickle'
+    as saved by save_chi_last()
+    '''
+    filepath = 'Experiment_data/Multiple'+'chi--'+circuit_name+'--.pickle'
     fo = open(filepath, 'rb')
     chi_dict = pickle.load(fo)
     fo.close

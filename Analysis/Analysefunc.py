@@ -9,6 +9,49 @@ import Analysis.tomography_functions as tomoself
 import numpy as np
 
 #%% Fitting of tomodata to chi
+def fit_tomodata_multiple(meas_data_all, tomo_set, B_chi, B_choi, n,stddv=True):
+    '''
+    Fit the measurement tomography data from multiple datasets in meas_data_all specified by tomo_set to a chi and a corresponding choi matrix.
+    There are 3 different methods:
+        -'own' (standard): This method used the _fit_tomodata_own_ function, which is specified in that docstring.
+            This method uses the _fit_tomodata_own() function. It provides a CP and TP chi and choi matrix.
+            Furthermore, it calculates the standard deviation on chi (and choi) if stddv==True (standard)
+            For details, see the docstring of that function.
+        
+    The other two methods use the interal qiskit function qiskit.tools.qcvv.tomography.fit_tomography_data()
+    Both these methods use the wrapper function _fit_tomodata_qiskit_(). For details, see that docstring.
+        -'wizard' : This method gives a CP choi and chi matrix but has problems with trace preservation.
+        -'leastsq': This method is a straightforward least squares fit that does not promise CP, but has less problems with TP.
+        
+    The process matrices are returned as:
+        ((chi,chi_stddv),(choi,choi_stddv))
+    '''
+    B_chi = tomoself.get_pauli_basis(n)                                         # Get the basis in which chi is expressed
+    B_prep = tomoself.get_pauli_basis(n, normalise=False)                       # Get the basis in which the experiments are prepared
+    B_meas = tomoself.get_pauli_basis(n, normalise=False)                       # Get the basis in which the measurements are done
+    
+    lam, lampau, lamstddv = tomoself.get_lambda_from_meas_multiple(tomo_set,             # Get the vectors lambda and lambda_stddv from the tomography data
+                                                          meas_data_all, n)
+    A = tomoself.get_A_mat(B_prep, B_meas, B_chi)                               # Calculate the A matrix from the prep, meas and chi basis
+    chivect = np.linalg.solve(A, lam)                                           # Invert to calculate chi in vectorform
+    Ainv = np.linalg.inv(A)                                                     # Calculate the inverse of A for error calculations (A is full rank)
+    Ainvsq = np.abs(Ainv)*np.abs(Ainv);                                         # Calculate the elementwise square of Ainv
+    lamstddvsq = lamstddv*lamstddv;                                             # Calculate the elementwise square of l_stddv
+    chistddvvect = np.sqrt(Ainvsq @ lamstddvsq)                                 # Calculate the standard deviation on chi using the method from the description
+    chi = np.reshape(chivect, ((2*n)**2, (2*n)**2))                             # Reshape into a square matrix
+    print('Minimum eigenvalue before: ', np.min(np.linalg.eigvals(chi)))
+    chi_stddv = np.reshape(chistddvvect, ((2*n)**2, (2*n)**2))                   # Reshape into a square matrix
+    print('largest eigenvalue before: ',np.max(np.linalg.eigvals(chi)))
+    num = np.max(np.linalg.eigvals(chi)) + np.abs(np.min(np.linalg.eigvals(chi)))
+    den = 4+16*np.abs(np.min(np.linalg.eigvals(chi)))
+    print('test: ',num/den)
+    chi = make_CP(chi,n)
+    print('Minimum eigenvalue after: ', np.min(np.linalg.eigvals(chi)))
+    print('largest eigenvalue after: ',np.max(np.linalg.eigvals(chi)))
+    choi = tomoself.chi_to_choi(chi,B_choi, n)
+    choi_stddv = tomoself.chi_to_choi(chi_stddv, B_choi, n)
+    return ((chi,chi_stddv),(choi,choi_stddv))
+
 def fit_tomodata(tomo_data, tomo_set, B_chi, B_choi, n, method='own',stddv=True):
     '''
     Fit the tomography data from tomo_data specified by tomo_set to a chi and a corresponding choi matrix.

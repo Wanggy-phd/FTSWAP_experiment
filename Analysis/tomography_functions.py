@@ -8,7 +8,7 @@ from functools import reduce
 import itertools as itt
 import numpy as np
 import operator as op
-
+import math
 #%% Basis generating functions
 sq2 = np.sqrt(2)
 
@@ -200,6 +200,63 @@ def get_lambda_from_meas(tomo_set, meas_data, n):
             lamstddv.append(_get_lamijstddv_from_PiPj_(Pi, Pj, rew_data_stddv, n)) # Get the lamij_stddv corresponding to Pi&Pj
     return np.array(lam), lampau, np.array(lamstddv)
 
+def get_lambda_from_meas_multiple(tomo_set, meas_data_all, n):
+    '''
+    Calculates the lambda vector that relates to the chi matrix via the A matrix for multiple sets of measurement data, assumed all to have the same number of shots.
+    The lambda vector is calculated from the measurement data and the specified tomography set.
+    Lambda is a vector of length i_tot* j_tot, with i_tot and j_tot the number of different input and output bases respectively.
+    Lambda is of the form:
+        l(ij) = tr(P_j @ L(P_i)), for a input basis P_i, a measurement basis P_j and the system L() on which the tomography is performed.
+    
+    However, the measurement data is not of that form.
+    The measurement data is first reworked using rework_data(tomo_set, meas_data) (see docstring of that function for details)
+    The reworked measurement data is then a dictionary of all counts of the type:
+        '_prep_X1(1)Y0(0)_meas_Y1(1)Z0(0)' : counts/#shots for
+                                preperation of qubit(1) in the -1 eigenstate of X
+                                preparation of qubit(0) in the +1 eigenstate of Y
+                                measurement of qubit(1) in the Y basis and getting the -1 eigenvalue
+                                measurement of qubit(0) in the Z basis and getting the +1 eigenvalue
+    
+    Then, for every element l(ij) = tr(P_j @ L(P_i)) is expanded into all these preparation states and measurement states.
+    This is done by the function get_lamij_from_PiPj(). See that function for details.
+    
+    Furthermore, the function also calculates the standard deviation on lambda, lambdastddv.
+    This is done for every P_i and P_j using the get_lamijstddv_from_PiPj() function.
+    See that function for details.
+    The function then returns:
+        lambda, lampau, lambda_stddv
+        with lampau a list with the ith element the pauli names corresponding to the ith element of lambda
+    '''
+    nr_jobs = len(meas_data_all)
+    reworked_meas_data_all_list = []
+    reworked_meas_data_all = dict()
+    reworked_meas_data_all_stddv = dict()
+    for meas_data in meas_data_all:
+        reworked_meas_data,  rew_data_stddv =  _rework_data_(tomo_set, meas_data)
+        reworked_meas_data_all_list.append(reworked_meas_data)
+    for jobnr, job in enumerate(reworked_meas_data_all_list):
+        for key in job.keys():
+            if jobnr == 0:
+                reworked_meas_data_all[key] = reworked_meas_data[key]
+            else:
+                reworked_meas_data_all[key] = reworked_meas_data_all[key]+ reworked_meas_data[key]
+    for key in reworked_meas_data_all.keys():
+        reworked_meas_data_all[key] = reworked_meas_data_all[key]/nr_jobs
+    for key in reworked_meas_data_all.keys():
+        p = reworked_meas_data_all[key]
+        reworked_meas_data_all_stddv[key] = np.sqrt(p*(1-p)/(nr_jobs*8192))
+    lam = []
+    lampau = []
+    lamstddv = []
+    prep = get_pauli_list(n)
+    meas = get_pauli_list(n)
+    for Pi in prep:
+        for Pj in meas:
+            lam.append(_get_lamij_from_PiPj_(Pi, Pj, reworked_meas_data_all, n)) # Get the lamij corresponding to Pi&Pj 
+            lampau.append([Pi, Pj])
+            lamstddv.append(_get_lamijstddv_from_PiPj_(Pi, Pj, reworked_meas_data_all_stddv, n)) # Get the lamij_stddv corresponding to Pi&Pj
+    return np.array(lam), lampau, np.array(lamstddv)
+
 
 def _rework_data_(tomo_set, meas_data):
     '''
@@ -244,7 +301,6 @@ def _rework_data_(tomo_set, meas_data):
                 reworked_meas_data[updatedlabel] = data;                        # Put the value for updatedlabel in the dictionary
                 rew_data_stddv[updatedlabel] = np.sqrt(data*(1-data)/shots)     # The standard deviation on success rate p of a binomial variable is (p*(1-p)/n)^(1/2)
     return reworked_meas_data, rew_data_stddv
-
 
 def _get_lamij_from_PiPj_(Pi, Pj, reworked_meas_data, n):
     '''
