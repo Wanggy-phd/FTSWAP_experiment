@@ -89,7 +89,7 @@ chi_dict = {'chi': chi , 'chi_filtered' : chi_filtered, 'chi_perror' : chi_perro
 store.save_chi_last(chi_dict, circuit_name)
 store.save_chi(chi_dict, timestamp, run_type, circuit_name)
 #%% delete unwanted variables
-del fit_method, direct, results_loaded, run_type, timestamp,tomo_data, tomo_set
+del fit_method, direct, run_type, timestamp,tomo_data, tomo_set
 #%% Plotting
 pt.plot_city(chi, tomoself.get_pauli_names(n), r'$\chi_{filtered}$')
 pt.plot_city(chi_perror, tomoself.get_pauli_names(n), r'$\chi_{error}$')

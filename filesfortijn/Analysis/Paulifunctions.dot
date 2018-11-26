@@ -1,0 +1,31 @@
+digraph G {
+    graph [rankdir=TB, clusterrank="local"];
+    subgraph cluster_G {
+
+        graph [style="filled,rounded",fillcolor="#80808018", label=""];
+        Paulifunctions [label="Paulifunctions", style="filled", fillcolor="#ffffffb2", fontcolor="#000000", group="0"];
+        subgraph cluster_Paulifunctions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="Paulifunctions"];
+            Paulifunctions__calc_trace_P1prod [label="calc_trace_P1prod\n(Paulifunctions.py:9)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_Paulifunctions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="Paulifunctions"];
+            Paulifunctions__calc_trace_P2prod [label="calc_trace_P2prod\n(Paulifunctions.py:36)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_Paulifunctions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="Paulifunctions"];
+            Paulifunctions__kron [label="kron\n(Paulifunctions.py:52)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_Paulifunctions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="Paulifunctions"];
+            Paulifunctions__levi [label="levi\n(Paulifunctions.py:59)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+    }
+        Paulifunctions__calc_trace_P1prod -> Paulifunctions__kron [style="solid", color="#000000"];
+        Paulifunctions__calc_trace_P1prod -> Paulifunctions__levi [style="solid", color="#000000"];
+        Paulifunctions__calc_trace_P2prod -> Paulifunctions__calc_trace_P1prod [style="solid", color="#000000"];
+    }

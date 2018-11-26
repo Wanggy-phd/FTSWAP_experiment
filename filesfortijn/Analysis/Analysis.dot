@@ -1,0 +1,69 @@
+digraph G {
+    graph [rankdir=TB, clusterrank="local"];
+    subgraph cluster_G {
+
+        graph [style="filled,rounded",fillcolor="#80808018", label=""];
+        Analysis [label="Analysis", style="filled", fillcolor="#ffffffb2", fontcolor="#000000", group="0"];
+        subgraph cluster_Analysis {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="Analysis"];
+            Analysis__check_TP [label="check_TP\n(Analysis.py:64)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_Analysis {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="Analysis"];
+            Analysis__filter_chi_meas [label="filter_chi_meas\n(Analysis.py:97)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_Analysis {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="Analysis"];
+            Analysis__filter_meas [label="filter_meas\n(Analysis.py:161)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_Analysis {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="Analysis"];
+            Analysis__fit_chi_own [label="fit_chi_own\n(Analysis.py:24)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_Analysis {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="Analysis"];
+            Analysis__fit_tomodata [label="fit_tomodata\n(Analysis.py:12)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_Analysis {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="Analysis"];
+            Analysis__get_TPsum [label="get_TPsum\n(Analysis.py:55)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_Analysis {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="Analysis"];
+            Analysis__get_chi_error [label="get_chi_error\n(Analysis.py:78)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_Analysis {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="Analysis"];
+            Analysis__get_measfiltermat [label="get_measfiltermat\n(Analysis.py:128)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_Analysis {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="Analysis"];
+            Analysis__get_measfiltermatind [label="get_measfiltermatind\n(Analysis.py:109)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_Analysis {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="Analysis"];
+            Analysis__get_total_prob [label="get_total_prob\n(Analysis.py:36)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_Analysis {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="Analysis"];
+            Analysis__make_CP [label="make_CP\n(Analysis.py:46)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_Analysis {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="Analysis"];
+            Analysis__unit_to_choi [label="unit_to_choi\n(Analysis.py:104)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+    }
+        Analysis__check_TP -> Analysis__get_TPsum [style="solid", color="#000000"];
+    }

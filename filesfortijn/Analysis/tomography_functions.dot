@@ -1,0 +1,103 @@
+digraph G {
+    graph [rankdir=TB, clusterrank="local"];
+    subgraph cluster_G {
+
+        graph [style="filled,rounded",fillcolor="#80808018", label=""];
+        tomographXy_functions [label="tomography_functions", style="filled", fillcolor="#ffffffb2", fontcolor="#000000", group="0"];
+        subgraph cluster_tomographXy_functions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="tomography_functions"];
+            tomographXy_functions__chi_to_choi [label="chi_to_choi\n(tomography_functions.py:106)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_tomographXy_functions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="tomography_functions"];
+            tomographXy_functions__choi_to_chi [label="choi_to_chi\n(tomography_functions.py:98)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_tomographXy_functions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="tomography_functions"];
+            tomographXy_functions__get_A_mat [label="get_A_mat\n(tomography_functions.py:170)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_tomographXy_functions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="tomography_functions"];
+            tomographXy_functions__get_A_mat_fast [label="get_A_mat_fast\n(tomography_functions.py:138)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_tomographXy_functions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="tomography_functions"];
+            tomographXy_functions__get_A_mat_faster [label="get_A_mat_faster\n(tomography_functions.py:158)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_tomographXy_functions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="tomography_functions"];
+            tomographXy_functions__get_canon_basis [label="get_canon_basis\n(tomography_functions.py:60)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_tomographXy_functions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="tomography_functions"];
+            tomographXy_functions__get_canonical_basis [label="get_canonical_basis\n(tomography_functions.py:44)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_tomographXy_functions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="tomography_functions"];
+            tomographXy_functions__get_choi_basis [label="get_choi_basis\n(tomography_functions.py:82)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_tomographXy_functions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="tomography_functions"];
+            tomographXy_functions__get_lambda_from_meas [label="get_lambda_from_meas\n(tomography_functions.py:194)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_tomographXy_functions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="tomography_functions"];
+            tomographXy_functions__get_lamij_from_PiPj [label="get_lamij_from_PiPj\n(tomography_functions.py:223)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_tomographXy_functions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="tomography_functions"];
+            tomographXy_functions__get_max_ent_2n [label="get_max_ent_2n\n(tomography_functions.py:69)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_tomographXy_functions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="tomography_functions"];
+            tomographXy_functions__get_pauli_basis [label="get_pauli_basis\n(tomography_functions.py:14)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_tomographXy_functions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="tomography_functions"];
+            tomographXy_functions__get_pauli_basis_unnorm [label="get_pauli_basis_unnorm\n(tomography_functions.py:29)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_tomographXy_functions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="tomography_functions"];
+            tomographXy_functions__get_pauli_list [label="get_pauli_list\n(tomography_functions.py:115)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_tomographXy_functions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="tomography_functions"];
+            tomographXy_functions__get_pauli_names [label="get_pauli_names\n(tomography_functions.py:123)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_tomographXy_functions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="tomography_functions"];
+            tomographXy_functions__get_string_from_prepmeas [label="get_string_from_prepmeas\n(tomography_functions.py:131)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_tomographXy_functions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="tomography_functions"];
+            tomographXy_functions__rework_data [label="rework_data\n(tomography_functions.py:208)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_tomographXy_functions {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="tomography_functions"];
+            tomographXy_functions__unitary_to_choi [label="unitary_to_choi\n(tomography_functions.py:93)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+    }
+        tomographXy_functions__get_max_ent_2n -> tomographXy_functions__get_canon_basis [style="solid", color="#000000"];
+        tomographXy_functions__get_choi_basis -> tomographXy_functions__get_max_ent_2n [style="solid", color="#000000"];
+        tomographXy_functions__get_lambda_from_meas -> tomographXy_functions__rework_data [style="solid", color="#000000"];
+        tomographXy_functions__get_lambda_from_meas -> tomographXy_functions__get_lamij_from_PiPj [style="solid", color="#000000"];
+        tomographXy_functions__get_lambda_from_meas -> tomographXy_functions__get_pauli_list [style="solid", color="#000000"];
+    }

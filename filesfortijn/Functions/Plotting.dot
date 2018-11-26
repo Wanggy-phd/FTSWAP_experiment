@@ -1,0 +1,13 @@
+digraph G {
+    graph [rankdir=TB, clusterrank="local"];
+    subgraph cluster_G {
+
+        graph [style="filled,rounded",fillcolor="#80808018", label=""];
+        Plotting [label="Plotting", style="filled", fillcolor="#ffffffb2", fontcolor="#000000", group="0"];
+        subgraph cluster_Plotting {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="Plotting"];
+            Plotting__plot_city [label="plot_city\n(Plotting.py:17)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+    }
+    }

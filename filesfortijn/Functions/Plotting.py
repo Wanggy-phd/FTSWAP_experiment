@@ -219,37 +219,6 @@ def plot_city_with_var(chi, chivar, pnames, title):
 
     plt.show()
 
-def plot_contour_fid_multi(pslist,pmlist,heightft,heightnft, title, levels = None, cmapstyle = 'winter'):
-    mmax = np.max(pmlist)
-    smax = np.max(pslist)
-    width = 7
-    fig1 = plt.figure(figsize=(3*smax/mmax*width,width))
-    fig1.suptitle(title, fontsize=20)
-    ax1 = fig1.add_subplot(121)
-    minlevel = np.min([np.around(np.abs(np.min(heightft)),2),np.around(np.abs(np.min(heightnft)),2)])
-    maxlevel = 1
-    if levels == None:
-        levels = np.around(np.linspace(minlevel,maxlevel,num=9),2)
-    if type(levels) == int:
-        levels = np.around(np.linspace(minlevel, maxlevel, num = levels),2)
-    CP1 = ax1.contourf(pslist,pmlist,np.real(heightft),levels,alpha = 0.9,cmap=cmapstyle)
-    ax1.contour(pslist,pmlist,np.real(heightft),levels,alpha = 0.5,colors='k')
-    plt.xlabel = '$p_{s}$'
-    plt.ylabel('$p_{m}$', fontsize = 15)
-    plt.title('Fault tolerant')
-    ax2 = fig1.add_subplot(122)
-    CP2 = ax2.contourf(pslist,pmlist,np.real(heightnft),levels,alpha = 0.9,cmap=cmapstyle)
-    ax2.contour(pslist,pmlist,np.real(heightnft),levels,alpha = 0.5,colors='k')
-    plt.xlabel = '$p_{s}$'
-    ax2.get_yaxis().set_visible(False)
-    plt.title('Non-fault tolerant')
-    top_plot = 0.9
-    bottom_plot = 0.1
-    fig1.subplots_adjust(left = 0.1, right = 0.8,hspace = 0.1, wspace = 0.1, top = top_plot, bottom = bottom_plot)
-    cbar_ax = fig1.add_axes([0.85, bottom_plot, 0.05, top_plot - bottom_plot])
-    fig1.colorbar(CP1, cbar_ax)
-    fig1.savefig(fname = 'Multi-%s.pdf'%(title), format = 'pdf',bbox_inches = 'tight', pad_inches = 0)
-    
 
 def plot_contour_fid(pslist,pmlist,height,title,levels=None):
     '''
@@ -259,10 +228,7 @@ def plot_contour_fid(pslist,pmlist,height,title,levels=None):
     Optional contour levels can be provided in levels.
     Please also provide a title.
     '''
-    mmax = np.max(pmlist)
-    smax = np.max(pslist)
-    width = 7
-    fig1 = plt.figure(figsize=(smax/mmax*width,width))
+    fig1 = plt.figure(figsize=(12,11))
     fig1.suptitle(title, fontsize=20)
     minlevel = np.around(np.abs(np.min(height)),2)
     maxlevel = np.around(np.abs(np.max(height)),2)

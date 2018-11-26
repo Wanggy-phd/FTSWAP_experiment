@@ -57,7 +57,7 @@ for jobc,job in enumerate(jobs):
     n = int(np.log2(np.shape(Unitary)[0]))
 
 #%% Tomography; obtaining chi and choi matrices, check CP and TP
-B_chi = tomoself.get_pauli_basis(n)
+B_chi = tomoself.get_pauli_basis(n, normalise = False)
 B_choi = tomoself.get_choi_basis(n, B_chi)
 
 ((chi,chistddv),(choi,choistddv)) = an.fit_tomodata_multiple(meas_data_all, tomo_set, B_chi, B_choi, n, stddv=True)
@@ -86,7 +86,9 @@ process_fidelity = an.process_fidelity(chi_perror, n)
 process_fidelity_unfiltered = an.process_fidelity(chi_unfiltered_perror, n)
 channel_fidelity = an.channel_fidelity(chi_perror, B_choi, n)
 
+
 print('Process fidelity from error matrix:', np.around(np.abs(process_fidelity),3))
+print('Process fidelity from error matrix unr:', np.abs(process_fidelity))
 print('Channel fidelity from Choi matrix:', np.around(np.abs(channel_fidelity),3))
 print('Process fidelity from unfiltered error matrix:',
       np.around(np.abs(process_fidelity_unfiltered),3))
@@ -100,8 +102,8 @@ store.save_chi_mult(chi_dict, timestamp, run_type, circuit_name)
 #%% delete unwanted variables
 del fit_method, results_loaded, run_type, timestamp,tomo_data, tomo_set
 #%% Plotting
-pt.plot_city(chi, tomoself.get_pauli_names(n), r'$\chi$', circuit_name+'chi')
-pt.plot_city(chi_perror, tomoself.get_pauli_names(n), r'$\chi_{error}$', circuit_name+'chi_perror')
+pt.plot_city(chi, tomoself.get_pauli_names(n), r'$\chi$', circuit_name+'chi', err = False)
+pt.plot_city(chi_perror, tomoself.get_pauli_names(n), r'$\chi_{error}$', circuit_name+'chi_perror', err = True)
 #%% Plotting with standard deviation
 #pt.plot_city_with_var(chi,chistddv, tomoself.get_pauli_names(n),r'$\chi_{filtered}$')
 #pt.plot_city_with_var(chi_perror,chi_perror_stddv, tomoself.get_pauli_names(n),r'$\chi_{error}$')

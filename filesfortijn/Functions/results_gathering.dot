@@ -1,0 +1,48 @@
+digraph G {
+    graph [rankdir=TB, clusterrank="local"];
+    subgraph cluster_G {
+
+        graph [style="filled,rounded",fillcolor="#80808018", label=""];
+        results_gathering [label="results_gathering", style="filled", fillcolor="#ffffffb2", fontcolor="#000000", group="0"];
+        subgraph cluster_results_gathering {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="results_gathering"];
+            results_gathering__cancel_jobs_from_jobids [label="cancel_jobs_from_jobids\n(results_gathering.py:45)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_results_gathering {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="results_gathering"];
+            results_gathering__get_calibration_from_jobids [label="get_calibration_from_jobids\n(results_gathering.py:31)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_results_gathering {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="results_gathering"];
+            results_gathering__get_jobids_from_file [label="get_jobids_from_file\n(results_gathering.py:78)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_results_gathering {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="results_gathering"];
+            results_gathering__get_last_jobids [label="get_last_jobids\n(results_gathering.py:117)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_results_gathering {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="results_gathering"];
+            results_gathering__get_last_jobids_and_data [label="get_last_jobids_and_data\n(results_gathering.py:101)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_results_gathering {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="results_gathering"];
+            results_gathering__get_results_from_jobids [label="get_results_from_jobids\n(results_gathering.py:15)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_results_gathering {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="results_gathering"];
+            results_gathering__get_status_from_jobids [label="get_status_from_jobids\n(results_gathering.py:128)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_results_gathering {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="results_gathering"];
+            results_gathering__get_tomoset_from_file [label="get_tomoset_from_file\n(results_gathering.py:59)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+    }
+    }
